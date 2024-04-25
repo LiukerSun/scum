@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import {
   LoginForm,
+  ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
@@ -205,6 +206,23 @@ const Login: React.FC = () => {
               ]}
             />
           </>
+          <div
+            style={{
+              marginBlockEnd: 24,
+            }}
+          >
+            <ProFormCheckbox noStyle name="autoLogin">
+              自动登录
+            </ProFormCheckbox>
+            <a
+              href='/user/register'
+              style={{
+                float: 'right',
+              }}
+            >
+              注册账号
+            </a>
+          </div>
         </LoginForm>
       </div>
       <Footer />

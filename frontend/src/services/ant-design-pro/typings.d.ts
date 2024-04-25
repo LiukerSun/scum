@@ -15,11 +15,20 @@ declare namespace API {
     name?: string;
     password?: string;
   };
+  
+  type RegisterParams = {
+    name?: string;
+    password?: string;
+  };
 
   type LoginResult = {
     data: {
       user_token: string;
     };
+    detail?: string;
+  };
+
+  type RegisterResult = {
     detail?: string;
   };
 

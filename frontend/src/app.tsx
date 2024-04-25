@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import {  SelectLang } from '@/components/RightContent';
+import { SelectLang } from '@/components/RightContent';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
@@ -11,7 +11,7 @@ import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDrop
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
-
+const registerPath = '/user/register';
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -34,7 +34,7 @@ export async function getInitialState(): Promise<{
   };
   // 如果不是登录页面，执行
   const { location } = history;
-  if (location.pathname !== loginPath) {
+  if (location.pathname !== loginPath && location.pathname !== registerPath) {
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -51,7 +51,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    actionsRender: () => [ <SelectLang key="SelectLang" />],
+    actionsRender: () => [<SelectLang key="SelectLang" />],
     avatarProps: {
       src: initialState?.currentUser?.user_profile.avatar,
       title: <AvatarName />,
@@ -60,14 +60,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       },
     },
     waterMarkProps: {
-      content: initialState?.currentUser?.user_profile.username,
+      content: "SCUM商城 " + initialState?.currentUser?.user_profile.username,
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
+      if (!initialState?.currentUser && location.pathname !== registerPath && location.pathname !== loginPath) {
+        history.push(registerPath);
       }
     },
     layoutBgImgList: [

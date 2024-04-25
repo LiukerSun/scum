@@ -7,3 +7,5 @@ frontend/pnpm-lock.yaml
 *.pyc
 backend/auth/migrations/
 backend/config.ini
+*.log
+frontend/src/.umi-test/
