@@ -23,7 +23,9 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     "drf_yasg",
     "rest_framework",
+    "channels",
     "auth",
+    "device",
 ]
 
 # MIDDLEWARE
@@ -34,13 +36,38 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",  # or use RedisChannelLayer for production
+    },
+}
+
+CACHES = {
+    "devices": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # 这里的 1 是数据库的编号
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "commands": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",  # 这里的 2 是数据库的编号
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
 # URL
 ROOT_URLCONF = "admin.urls"
 
 # LOG
 DJANGO_LOG_LEVEL = "DEBUG"
 
-WSGI_APPLICATION = "admin.wsgi.application"
+# WSGI_APPLICATION = "admin.wsgi.application"
+ASGI_APPLICATION = "admin.asgi.application"
 
 REST_FRAMEWORK = {
     "UNAUTHENTICATED_USER": None,
